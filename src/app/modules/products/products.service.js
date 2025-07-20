@@ -11,8 +11,14 @@ const allProducts = async () => {
 
 	return result;
 };
+const updateProductCategory = async (id, category) => {
+	const result = await Product.findByIdAndUpdate(id, { category }, { new: true });
+
+	return result;
+};
 
 export const ProductsService = {
 	addProduct,
-	allProducts
+	allProducts,
+	updateProductCategory
 };

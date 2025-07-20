@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 import catchAsync from '../../../shared/catchAsync.js';
 import sendResponse from '../../../shared/sendResponse.js';
@@ -19,6 +20,18 @@ const addProducts = catchAsync(async (req, res) => {
   });
 });
 
+const updateProductCategory = catchAsync(async (req, res) => {
+  const { category } = req.body;
+  const result = await ProductsService.updateProductCategory(req.params.id, category);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Book retrieved successfully',
+    data: result,
+  });
+});
+
 const allProducts = catchAsync(async (req, res) => {
 
   const result = await ProductsService.allProducts();
@@ -36,5 +49,6 @@ const allProducts = catchAsync(async (req, res) => {
 
 export const ProductsController = {
   addProducts,
-  allProducts
+  allProducts,
+  updateProductCategory
 };

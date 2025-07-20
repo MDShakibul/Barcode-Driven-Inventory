@@ -3,8 +3,8 @@ import { CategoriesController } from './categories.controller.js';
 
 const router = express.Router();
 
-router.post('/add-category', CategoriesController.addCategory);
-router.get('/all-categories', CategoriesController.allCategories);
+router.patch('/add-category', CategoriesController.addCategory);
+router.get('/', CategoriesController.allCategories);
 
 
 export const CategoriesRoutes = router;
