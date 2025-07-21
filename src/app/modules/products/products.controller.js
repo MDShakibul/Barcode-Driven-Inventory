@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 
+import axios from 'axios';
 import catchAsync from '../../../shared/catchAsync.js';
 import sendResponse from '../../../shared/sendResponse.js';
 import { ProductsService } from './products.service.js';
@@ -17,6 +18,23 @@ const addProducts = catchAsync(async (req, res) => {
     success: true,
     message: 'Add Products successfully',
     data: result,
+  });
+});
+
+const productDetail = catchAsync(async (req, res) => {
+  const { barcode } = req.params; // ✅ fix
+
+  console.log('Barcode received:', barcode);
+
+  const result = await axios.get(`https://products-test-aci.onrender.com/product/${barcode}`);
+
+  console.log('Product from external API:', result?.data?.product);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Fetched product successfully',
+    data: result?.data?.product,
   });
 });
 
@@ -49,6 +67,7 @@ const allProducts = catchAsync(async (req, res) => {
 
 export const ProductsController = {
   addProducts,
+  productDetail,
   allProducts,
   updateProductCategory
 };
