@@ -5,7 +5,7 @@
 
 ## Important Note
 
-> **Note:** The `.env` file attached with the email. Please ensure you have them before running the project.
+> **Note:** The `.env` file has been attached to the email. Kindly ensure it is in place before running the project..
 
 ## Getting Started
 
