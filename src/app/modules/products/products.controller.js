@@ -5,6 +5,7 @@ import catchAsync from '../../../shared/catchAsync.js';
 import sendResponse from '../../../shared/sendResponse.js';
 import { ProductsService } from './products.service.js';
 import httpStatus from 'http-status';
+import ApiError from '../../../errors/ApiError.js';
 
 
 const addProducts = catchAsync(async (req, res) => {
@@ -22,13 +23,15 @@ const addProducts = catchAsync(async (req, res) => {
 });
 
 const productDetail = catchAsync(async (req, res) => {
-  const { barcode } = req.params; // ✅ fix
+  const { barcode } = req.params; 
 
-  console.log('Barcode received:', barcode);
 
   const result = await axios.get(`https://products-test-aci.onrender.com/product/${barcode}`);
+  if (result?.data?.error === 'Item not found') {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Product not found with the given barcode');
+  }
 
-  console.log('Product from external API:', result?.data?.product);
+  
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
